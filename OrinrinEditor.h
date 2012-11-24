@@ -902,3 +902,12 @@ HBITMAP	AacArtImageGet( HWND, INT, LPSIZE, LPSIZE );	//!<
 LPSTR	AacAsciiArtGet( DWORD );			//!<	
 INT		AacArtSizeGet( DWORD, PINT, PINT );
 
+
+#define OE_PLUGIN_ENABLE
+#ifdef OE_PLUGIN_ENABLE
+//-----------------------------
+//[_16in]:2012/11/16
+//	プラグインヘッダ読み込み
+//
+#include "EditorPlugin\\Plugin.h"
+#endif

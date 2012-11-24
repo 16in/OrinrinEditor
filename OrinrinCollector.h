@@ -72,3 +72,6 @@ LPTSTR	SjisDecodeAlloc( LPSTR );		//!<
 LPSTR	SjisEncodeAlloc( LPCTSTR );		//!<	
 LPSTR	SjisEntityExchange( LPCSTR );	//!<	
 TCHAR	UniRefCheck( LPSTR );			//!<	
+
+
+#include "OrinrinEditor.h"

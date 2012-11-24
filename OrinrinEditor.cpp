@@ -548,7 +548,7 @@ static  HINSTANCE	ghInst;						//!<	現在のインターフェイス
 static  TCHAR		gszTitle[MAX_STRING];		//!<	タイトルバーのテキスト
 static  TCHAR		gszWindowClass[MAX_STRING];	//!<	メインウィンドウクラス名
 
-static  HMENU		ghMenu;			//!<	メニュー
+EXTERNED  HMENU		ghMenu;			//!<	メニュー
 
 static	HACCEL		ghAccelTable;	//!<	キーボードアクセラレータハンドル
 
@@ -556,7 +556,7 @@ static  HWND		ghFileTabWnd;	//!<	複数ファイルタブ
 static  HWND		ghFileTabTip;	//!<	複数ファイルタブツールチップ
 static WNDPROC		gpfOriginFileTabProc;	//!<	複数ファイルタブの元プロシージャ
 
-static  HWND		ghMainWnd;		//!<	メインウインドウハンドル
+EXTERNED  HWND		ghMainWnd;		//!<	メインウインドウハンドル
 static  HWND		ghStsBarWnd;	//!<	ステータスバー
 static  HBRUSH		ghStsRedBrush;	//!<	ステータスバー用紅ブラシ
 
@@ -586,8 +586,8 @@ EXTERNED UINT		gbCrLfCode;		//!<	改行コード：０したらば・非０ＹＹ
 
 EXTERNED UINT		gdPageByteMax;	//!<	壱レスの最大バイト数
 
-static TCHAR		gatExePath[MAX_PATH];	//!<	実行ファイルの位置
-static TCHAR		gatIniPath[MAX_PATH];	//!<	ＩＮＩファイルの位置
+EXTERNED TCHAR		gatExePath[MAX_PATH];	//!<	実行ファイルの位置
+EXTERNED TCHAR		gatIniPath[MAX_PATH];	//!<	ＩＮＩファイルの位置
 
 EXTERNED INT		gbTmpltDock;	//!<	テンプレのドッキング
 
@@ -789,30 +789,6 @@ INT APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	ToolBarInfoChange( pstAccel, iEntry );	//	ツールバーのツールチップテキストにもキーを表示せる
 	FREE( pstAccel );
 
-#ifdef PLUGIN_ENABLE
-	//---------------------------------------
-	//[_16in] Add - 2012/04/30
-	//	プラグイン初期化処理
-
-	// プラグインへ渡すパラメータの設定
-	// ウィンドウハンドル
-	plugin::PluginInputParam	param;
-	param.hMainWnd    = ghMainWnd;
-	param.hMlutAAWnd  = ghMaaWnd;
-	param.hFileTabWnd = ghFileTabWnd;
-	param.hViewWnd    = ghViewWnd;
-
-	// メニューハンドル
-	param.hMainMenu   = ghMenu;
-
-	// プラグインの初期化
-	plugin::InitializePlugin( param );
-	plugin::InitializePluginFileListAsync( ghMainWnd );
-
-	//---------------------------------------
-#endif
-
-
 	//	メインメッセージループ
 	for(;;)
 	{
@@ -846,17 +822,12 @@ INT APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 		}
 	}
 
-#ifdef PLUGIN_ENABLE
-	//---------------------------------------------------------------------
-	//[_16in] Add - 2012/05/01
-	//
-	//-- プラグインの廃棄処理
-	plugin::FinalizePluginList( gPluginList );
-	plugin::FinalizePlugin();
-
-	//---------------------------------------------------------------------
+#ifdef OE_PLUGIN_ENABLE
+	//---------------------------------------
+	//[_16in] 2012/11/16
+	//	プラグイン廃棄処理
+	oe::plugin::OePlugin::Finalize();
 #endif
-
 
 	InitParamValue( INIT_SAVE, VL_CLASHCOVER, 0 );
 
@@ -932,6 +903,13 @@ BOOL InitInstance( HINSTANCE hInstance, INT nCmdShow, LPTSTR ptArgv )
 
 	HMENU	hSubMenu;
 
+
+#ifdef OE_PLUGIN_ENABLE
+	//---------------------------------------
+	//[_16in] 2012/11/16
+	//	プラグイン初期化処理
+	oe::plugin::OePlugin::Initialize();
+#endif
 
 
 	ghInst = hInstance;	//	グローバル変数にインスタンス処理を格納します。
@@ -1083,6 +1061,17 @@ BOOL InitInstance( HINSTANCE hInstance, INT nCmdShow, LPTSTR ptArgv )
 		Cls_OnSize( hWnd, SIZE_MAXIMIZED, rect.right, rect.top );
 	}
 	else{	ShowWindow( hWnd, nCmdShow );	}
+
+
+#ifdef OE_PLUGIN_ENABLE
+	//---------------------------------------
+	//[_16in] 2012/11/16
+	// プラグインメニュー生成
+	oe::plugin::OePlugin::AppendPluginMenu();
+
+	// 登録されたプラグイン全てを初期化
+	oe::plugin::OePlugin::AllPluginInitialize();
+#endif
 
 	UpdateWindow( hWnd );
 

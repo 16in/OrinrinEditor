@@ -177,8 +177,8 @@ LRESULT	ExceptionMessage( LPCSTR, LPCSTR, UINT, LPARAM );
 #define W_HEIGHT	400
 
 //	ウインドウサイズ・未使用
-//#define WCL_WIDTH	480
-//#define WCL_HEIGHT	370
+#define WCL_WIDTH	W_WIDTH
+#define WCL_HEIGHT	W_HEIGHT
 
 //	ドッキングサイズ
 #define PLIST_DOCK	190

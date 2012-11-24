@@ -672,7 +672,12 @@
 #define IDM_DB_THUMB_DEMIBOLD			33036
 #define IDM_DB_THUMB_ULTRABOLD			33038
 
+//------------------------------------------------------------
+//[_16in]:2012
+// プラグインメニュー用ID
 #define IDM_PLUGIN_ITEM_BASE            34000
+//------------------------------------------------------------
+
 #define IDC_STATIC                      -1
 
 // Next default values for new objects

@@ -41,7 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)OEPluginSDK\include&quot;"
+				PreprocessorDefinitions="OE_PLUGIN_IMPORT"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -115,7 +116,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)OEPluginSDK\include&quot;"
+				PreprocessorDefinitions="OE_PLUGIN_IMPORT"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -991,6 +993,38 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="EditorPlugin"
+			>
+			<File
+				RelativePath=".\EditorPlugin\Plugin.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\EditorPlugin\Plugin.h"
+				>
+			</File>
+			<File
+				RelativePath=".\EditorPlugin\PluginEditControl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\EditorPlugin\PluginEditControl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\EditorPlugin\PluginEditControl_procted.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\EditorPlugin\PluginExternVariables.h"
+				>
+			</File>
+			<File
+				RelativePath=".\EditorPlugin\PluginMenu.cpp"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
